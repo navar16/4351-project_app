@@ -1,0 +1,145 @@
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+   <!-- style file -->
+   <link rel="stylesheet" href="../style.css">
+
+   <title>project</title>
+</head>
+
+<body class="res-page">
+   <header>
+      <div class="res-header">
+         <a class="res-link" href="../index.html">TEAM 45 RESTAURANT</a>
+      </div>
+   </header>
+   <!-- start res window ------------------------------------------------------------------------------------------------------------- -->
+   <div class="guest-in">
+      <h1>Reserve Your Table Now !!!</h1>
+      <label for="total-guest"><b>Guest #: </b></label><br>
+      <input type="number" min="1" max="24" oninput="validity.valid||(value='');" id="total-guest"
+         name="total-guest"><br><br>
+      <label for="date"><b>Date:</b></label><br>
+      <input type="date" id="date" name="date" min='2023-01-01' max='2023-12-30' required><br><br>
+      <button class="open-button" onclick="set_user_res()">ENTER</button>
+   </div>
+   <!-- table options window ------------------------------------------------------------------------------------------------------------- -->
+   <div class="form-popup" id="reserve-table">
+      <form action="/action_page.php" class="form-container">
+         <table class="table mt-5 text-center" id="data-list">
+            <thead>
+               <tr class="table-head" id="table-head">
+                  <th>Table #</th>
+                  <th>Total Chairs</th>
+                  <th>-----</th>
+               </tr>
+            </thead>
+            <tbody id="table-info">
+
+
+            </tbody>
+         </table>
+         <button type="button" class="finish-button" onclick="res_table()">SUBMIT</button>
+         <button type="button" class="cancel-button" onclick="cancel_req(1)">CANCEL</button>
+      </form>
+   </div>
+   <!-- login option window ------------------------------------------------------------------------------------------------------------- -->
+   <div class="form-popup" id="login-request">
+      <form action="/action_page.php" class="form-container">
+         <button type="button" class="cancel-button" id="return-button" onclick="cancel_req(2)">RETURN TO TABLE SELECTION . . .</button>
+         <label for="user"></label><br>
+         <input type="text" id="input_user" placeholder="username: "><br><br> 
+         <label for="pass"></label><br>
+         <input type="text" id="input_pass" placeholder="password:"><br><br>
+         <button type="button" id="login-button" onclick="is_user()">LOGIN</button><br>
+         <button type="button" id="account-button" onclick="finish_req(2)">CREATE AN ACCOUNT</button><br>
+         <button type="button" id="guest-button" onclick="finish_req(3)">CONTINUE AS GUEST . . .</button><br>
+      </form>
+   </div>
+   <!-- input info option window ------------------------------------------------------------------------------------------------------------- -->
+   <div class="form-popup" id="info-request">
+      <form action="/action_page.php" class="form-container">
+         <label for="full-name"></label><br>
+         <input type="text" id="full-name" placeholder="full name..." required><br><br>
+         <label for="home-add"></label><br>
+         <input type="text" id="home-add" placeholder="address..." required><br><br>
+         <label for="city"></label><br>
+         <input type="text" id="city" placeholder="city..." required><br><br>
+         <label for="state"></label><br>
+         <input type="text" id="state" placeholder="state..." required><br><br>
+         <label for="phone"></label><br>
+         <input type="text" id="phone" pattern="[0-9]*$" minlength="10" maxlength="10" placeholder="phone number xxxxxxxxxx" required><br><br>
+         <button type="button" id="finalize-button" onclick="get_user_info()">FINALIZE
+            RESERVATION</button>
+         <button type="button" class="cancel-button" id="return-button" onclick="cancel_req(3)">RETURN TO TABLE
+            SELECTION . . .</button>
+      </form>
+   </div>
+   <!-- reservatioon confirmation window ------------------------------------------------------------------------------------------------------------- -->
+   <div class="form-popup" id="confirmation-page">
+      <form action="/action_page.php" class="form-container">
+      <h1>THANK YOU !!!</h1>
+         <div id="show-info">
+
+         </div>
+      <f1>close to return to home page...</f1>
+      <button type="button" class="cancel-button" id="return-home" onclick="cancel_req(4)">CLOSE</button>
+      </form>
+   </div>
+   <!-- account making window ------------------------------------------------------------------------------------------------------------- -->
+   <div class="form-popup" id="account-page">
+      <form action="/action_page.php" class="form-container">
+         <label for="new-user"></label><br>
+         <input type="text" id="new-user" placeholder="username..." required><br><br> 
+         <label for="new-pass"></label><br>
+         <input type="text" id="new-pass" placeholder="password..." required><br><br>
+         <label for="new-first-name"></label><br>
+         <input type="text" id="new-first-name" placeholder="first name..." required><br><br>
+         <label for="new-last-name"></label><br>
+         <input type="text" id="new-last-name" placeholder="last name..." required><br><br>
+         <label for="new-home-add"></label><br>
+         <input type="text" id="new-home-add" placeholder="address..." required><br><br>
+         <label for="new-city"></label><br>
+         <input type="text" id="new-city" placeholder="city..." required><br><br>
+         <label for="new-state"></label><br>
+         <input type="text" id="new-state" placeholder="state..." required><br><br>
+         <label for="new-phone"></label><br>
+         <input type="text" id="new-phone" pattern="[0-9]*$" minlength="10" maxlength="10" placeholder="phone number xxxxxxxxxx" required><br><br>
+         <button type="button" id="create-account" onclick="create_account()">REGISTER</button>
+      </form>
+   </div>
+
+   <script src="../main.js"></script>
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+      </script>
+
+</body>
+
+</html>
+<style>
+   input {
+      box-shadow: 0 12px 15px 0 rgba(42, 23, 148, 0.514), 0 17px 50px 0 rgba(27, 46, 153, 0.616);
+   }
+
+   th {
+      color: white;
+      border-style: solid;
+      border-color: white;
+      background-color: black;
+      box-shadow: 0 12px 15px 0 rgba(197, 12, 12, 0.562), 0 17px 50px 0 rgba(68, 0, 255, 0.678);
+   }
+</style>
